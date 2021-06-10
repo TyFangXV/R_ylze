@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/public/css/home.css" />
+    <title>blog</title>
+</head>
+<body>
+  <div>
+      <h1 class="title">bloggers</h1>   
+      <button onclick="newpost()">New blog</button>
+
+
+      <% article.forEach(i => {  %> 
+            <div class="post">
+                 <h1 id="title"><%= i.title %></h1>
+                 <h4 id="timestamp"><%= i.createdAt %></h4>
+                 <p id="content"><%= i.desc %></p>
+                 <span>
+                     <button>View</button>
+                     <button>Like</button>
+                     <button>Comment</button>
+                 </span>
+            </div>
+          <% }); %> 
+  </div>
+
+  <script>
+      const newpost = ()=>{
+          window.location.href = `${window.location.pathname}article/new`;
+      }
+  </script>
+</body>
+</html>
