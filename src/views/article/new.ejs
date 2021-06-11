@@ -9,13 +9,15 @@
 </head>
 <body>
     <div class="maker">
-        <form action="/article/post " method="post">
+        <form action="/article/newpost " method="POST">
             <label>title</label><br>
-            <textarea id="title"></textarea><br>
+            <textarea id="title" maxlength="50" name="title" required></textarea><br>
             <label>description</label><br>
-            <textarea id="desc"></textarea><br>
+            <textarea id="desc" maxlength="536" name="desc" required></textarea><br>
+            <label>tags</label><br>
+            <textarea id="tags" maxlength="100" name="tags"></textarea><br>
             <label>markdown</label><br>
-            <textarea id="markdown"></textarea><br>
+            <textarea id="markdown" name="markdown" required></textarea><br>
             <span>
                 <button onclick="location.href ='/'" type="button">cancel</button>
                 <button type="submit">Post</button>

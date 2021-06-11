@@ -1,17 +1,22 @@
 require("dotenv").config();
+const mongoose = require("mongoose")
 const express = require("express");
 const path = require("path");
+
+
 const articleRoute = require("./router/article");
+const articleModel = require("./model/article")
+
+
 const app = express();
+app.use(express.json())
+app.use(express.urlencoded({extended : false}))
+mongoose.connect(process.env.MONGO_URL, {useNewUrlParser : true, useUnifiedTopology : true}, ()=>{
+    console.log("mongo connected")
+});
 
-//mock data
-var today = new Date();
-var dd = String(today.getDate()).padStart(2, '0');
-var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-var yyyy = today.getFullYear();
 
-today = mm + '/' + dd + '/' + yyyy;
-const articles = [{title : "Self love", createdAt : today, desc : "self love"}]
+
 
 
 //express settings 
@@ -21,8 +26,11 @@ app.use("/public", express.static(path.join(__dirname + "/public")))
 
 app.use("/article", articleRoute);
 
-app.get("/", (req,res)=>{
-    res.render("index.ejs", {article : articles})
+app.get("/", async(req,res)=>{
+   const data = await articleModel.find().sort()
+
+    res.render("index.ejs", {article : data})
+
 })
 
 

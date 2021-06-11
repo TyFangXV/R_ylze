@@ -18,10 +18,11 @@
                  <h1 id="title"><%= i.title %></h1>
                  <h4 id="timestamp"><%= i.createdAt %></h4>
                  <p id="content"><%= i.desc %></p>
+                 <P id="tags"><%= i.tags %></P>
                  <span>
                      <button>View</button>
-                     <button>Like</button>
-                     <button>Comment</button>
+                     <button><%= i.like %> Like</button>
+                     <button><%= i.comment.length %> Comments</button>
                  </span>
             </div>
           <% }); %> 
