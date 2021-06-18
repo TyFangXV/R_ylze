@@ -1,4 +1,11 @@
 const mongoose = require("mongoose");
+const marked = require("marked");
+const slugify  = require("slugify");
+const createDomClean = require("dompurify");
+const {JSDOM} = require("jsdom");
+
+
+const domPurify = createDomClean(new JSDOM().window);
 
 const getCurrentDate = ()=>{
     var today = new Date();
@@ -39,7 +46,8 @@ const articleSchema = new mongoose.Schema({
        type : String,
        default : getCurrentDate
     }
-
 })
+
+
 
 module.exports = mongoose.model("article", articleSchema)

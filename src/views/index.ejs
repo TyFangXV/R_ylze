@@ -4,28 +4,33 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="/public/css/home.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <title>blog</title>
 </head>
 <body>
   <div>
-      <h1 class="title">bloggers</h1>   
-      <button onclick="newpost()">New blog</button>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin-bottom: 10px;">
+          <h1 class="navbar-brand">Blogging site</h1>   
+          <span class="ms-auto">
+              <button onclick="newpost()" class="btn btn-outline-success">New blog</button>
+          </span>
+      </nav>
 
-
-      <% article.forEach(i => {  %> 
-            <div class="post">
-                 <h1 id="title"><%= i.title %></h1>
-                 <h4 id="timestamp"><%= i.createdAt %></h4>
-                 <p id="content"><%= i.desc %></p>
-                 <P id="tags"><%= i.tags %></P>
-                 <span>
-                     <button>View</button>
-                     <button><%= i.like %> Like</button>
-                     <button><%= i.comment.length %> Comments</button>
-                 </span>
-            </div>
-          <% }); %> 
+     <center>
+         <% article.forEach(i => {  %> 
+               <div class="card" style="width: 50rem; margin-bottom: 5%; padding: 5px; border-radius: 10px;">
+                    <h1 id="card-title"><%= i.title %></h1>
+                    <h6 id="card-subtitle mb-2 text-muted"><%= i.createdAt %></h4>
+                    <p id="card-text"><%= i.desc %></p>
+                    <span>
+                       <a href="/article/v/<%= i.id %>" class="btn btn-primary">View</a>
+                        <span class="btn btn-primary" ><%= i.like %> Likes</span>
+                        <span class="btn btn-primary" ><%= i.comment.length %> Comments</span>
+                    </span>
+               </div>
+             <% }); %> 
+     </center>
   </div>
 
   <script>
@@ -33,5 +38,7 @@
           window.location.href = `${window.location.pathname}article/new`;
       }
   </script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 </body>
 </html>

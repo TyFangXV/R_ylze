@@ -4,17 +4,47 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <title>Document</title>
 </head>
 <body>
-    <h1><%= article.title %></h1>
-    <p><%= article.desc%></p>
-    <span>
-        <button>likes</button>
-    </span>
-    <hr>
-    <div id="content">
-        <%= article.markdown %>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin-bottom: 10px;">
+        <h1 class="navbar-brand">Blogging site</h1>   
+        <span class="ms-auto">
+            <a href="/" class="btn btn-outline-success">Home page</a>
+        </span>
+    </nav>
+
+    <div class="post" style="padding: 2px;">
+        <div class="top">
+            <h1 class="h1"><%= article.title %></h1>
+            <small class="text-muted" style="margin-bottom: 10px;"><%= article.createdAt %></small>
+            <p class="h6" style="margin-top: 10px"><%= article.desc%></p>
+            <div style="text-align: right;">
+                <form action="/article/v/<%= article.id %>?_method=DELETE" method="POST">
+                    <botton class="btn btn-outline-success"><span class="material-icons-outlined">thumb_up</span></botton>
+                    <button class="btn btn-danger" type="submit"><span class="material-icons-outlined">delete</span></button>
+                </form>
+            </div>
+        </div>
+        <hr>
+        <div id="content">
+            <%- article.markdown %>
+        </div>
+        <hr>
+        <form action="/article/p/<%= article.id %>/postcomment" method="POST">
+        <span>
+          <input name="comment" style="outline: none; border: 3px solid grey; border-radius: 5px; width: 25%;">
+          <button type="submit" class="btn btn-secondary"><i class="material-icons-outlined">send</i></button>
+        </span>
+        </form>
+        <% article.comment.forEach(i => {  %> 
+         <p class="h6"><%= i %></p>
+        <% }); %> 
     </div>
+
+    
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 </body>
 </html>

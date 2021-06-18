@@ -1,18 +1,18 @@
+let data = [];
 const express = require("express");
+
 const router = express.Router()
 
 const articleModel = require("../model/article")
+
 
 router.get("/", (req,res)=>{
     res.send("article data")
 })
 
-router.get("/v/:id", (req, res)=>{
-    articleModel.findById(req.params.id, (err, data)=>{
-        if(err) console.log(err.message)
-        if(data == null) res.render("/")
-        res.render("article/post", {article : data})
-    })
+router.get("/v/:id", async(req, res)=>{
+   const articles = await articleModel.findById(req.params.id);
+   res.render("article/post", {article : articles})
 })
 
 router.get("/new", (req, res)=>{
@@ -27,6 +27,7 @@ router.post("/newpost", async(req,res)=>{
       tags : req.body.tags,
       like : 0,
       comment : [],
+      sanitzedHtml : "-"
   })
   try {
    article =  await article.save();
@@ -37,6 +38,26 @@ router.post("/newpost", async(req,res)=>{
      console.log(error.message) 
   }
 
+})
+
+
+router.post("/p/:id/postcomment", async(req,res)=>{
+    let oldArticleData = await articleModel.findById(req.params.id);
+    oldArticleData.comment.forEach(i =>{
+        data.push(i);
+    })
+        data.push(req.body.comment);
+    let newArticleData = await articleModel.findByIdAndUpdate(req.params.id, {
+       comment :  data
+    })
+        data.length = 0;
+    res.redirect(`/article/v/${req.params.id}`)
+})
+
+
+router.delete("/v/:id", async(req,res)=>{
+     await articleModel.findByIdAndDelete(req.params.id);
+    res.redirect(`/`)
 })
 
 module.exports = router;
